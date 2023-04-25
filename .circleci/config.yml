@@ -11,8 +11,6 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.1-node-browsers
-      
-      - image: instainer/parse-server
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -49,17 +47,13 @@ jobs:
           keys:
             - node-v1-{{ checksum "package.json" }}
             - node-v1-
-      - run: yarn install
+      - run: npm install
       - save_cache:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
 
-      # prepare the database
-      - run: touch storage/testing.sqlite
-      - run: php artisan migrate --env=testing --database=sqlite_testing --force
-
-      # run tests with phpunit or codecept
-      #- run: ./vendor/bin/phpunit
-      - run: ./vendor/bin/codecept build
-      - run: ./vendor/bin/codecept run
+      - run: npm install -g parse-server mongodb-runner
+      - run: mongodb-runner start
+      - run: parse-server --appId app-id-here --masterKey master-key-here --databaseURI mongodb://localhost/test
+      - run: ./vendor/bin/phpunit tests
