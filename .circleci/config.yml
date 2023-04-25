@@ -39,21 +39,12 @@ jobs:
 
       - run: composer install -n --prefer-dist
 
-      # - save_cache:
-      #     key: v1-dependencies-{{ checksum "composer.json" }}
-      #     paths:
-      #       - ./vendor
-      # - restore_cache:
-      #     keys:
-      #       - node-v1-{{ checksum "package.json" }}
-      #       - node-v1-
-      # - run: npm install
-      # - save_cache:
-      #     key: node-v1-{{ checksum "package.json" }}
-      #     paths:
-      #       - node_modules
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
 
-      - run: npm install -g parse-server mongodb-runner
+      - run: yarn global add parse-server mongodb-runner
       - run: mongodb-runner start
       - run: parse-server --appId app-id-here --masterKey master-key-here --databaseURI mongodb://localhost/test
       - run: ./vendor/bin/phpunit tests
