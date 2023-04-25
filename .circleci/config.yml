@@ -13,7 +13,7 @@ jobs:
       - image: circleci/php:7.1-node-browsers
       - image: parseplatform/parse-server
 
-      envrionment:
+      environment:
         APP_ID: "app-id-here"
         APP_NAME: "app-name-here"
         MASTER_KEY: "master-key-here"
