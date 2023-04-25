@@ -45,5 +45,7 @@ jobs:
             - ./vendor
 
       - run: yarn global add parse-server mongodb-runner
-      - run: DEBUG=mongodb-* mongodb-runner start && parse-server --appId app-id-here --masterKey master-key-here --databaseURI mongodb://localhost/test
+      - run:
+          command: DEBUG=mongodb-* mongodb-runner start && parse-server --appId app-id-here --masterKey master-key-here --databaseURI mongodb://localhost/test
+          background: true
       - run: ./vendor/bin/phpunit tests
