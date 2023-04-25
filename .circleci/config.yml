@@ -11,8 +11,13 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.1-node-browsers
-      
       - image: parseplatform/parse-server
+
+      envrionment:
+        APP_ID: "app-id-here"
+        APP_NAME: "app-name-here"
+        MASTER_KEY: "master-key-here"
+
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
