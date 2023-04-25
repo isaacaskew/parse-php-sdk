@@ -44,8 +44,15 @@ jobs:
           paths:
             - ./vendor
 
-      - run: yarn global add parse-server mongodb-runner
+      - run: yarn global add parse-server mongodb-runner #specify certain version of parse server (or mongo db) here
       - run:
           command: DEBUG=mongodb-* mongodb-runner start && parse-server --appId app-id-here --masterKey master-key-here --databaseURI mongodb://localhost/test
           background: true
+      # wait for the server to start responding. We expect Bad Request 400 once it starts listening.
+      # so override the shell and have the last command be the : { null } command to force exit code 0.
+      - run:
+          shell: /bin/sh
+          command: |
+            wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:1337
+            :
       - run: ./vendor/bin/phpunit tests
