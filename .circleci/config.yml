@@ -39,19 +39,19 @@ jobs:
 
       - run: composer install -n --prefer-dist
 
-      - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
-          paths:
-            - ./vendor
-      - restore_cache:
-          keys:
-            - node-v1-{{ checksum "package.json" }}
-            - node-v1-
-      - run: npm install
-      - save_cache:
-          key: node-v1-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      # - save_cache:
+      #     key: v1-dependencies-{{ checksum "composer.json" }}
+      #     paths:
+      #       - ./vendor
+      # - restore_cache:
+      #     keys:
+      #       - node-v1-{{ checksum "package.json" }}
+      #       - node-v1-
+      # - run: npm install
+      # - save_cache:
+      #     key: node-v1-{{ checksum "package.json" }}
+      #     paths:
+      #       - node_modules
 
       - run: npm install -g parse-server mongodb-runner
       - run: mongodb-runner start
