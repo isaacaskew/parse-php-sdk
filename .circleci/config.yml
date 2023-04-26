@@ -44,7 +44,7 @@ jobs:
           paths:
             - ./vendor
 
-      - run: yarn global add parse-server mongodb-runner #specify certain version of parse server (or mongo db) here
+      - run: yarn global add parse-server@3^ mongodb-runner #specify certain version of parse server (or mongo db) here
       - run:
           command: DEBUG=mongodb-* mongodb-runner start && parse-server --appId app-id-here --masterKey master-key-here --databaseURI mongodb://localhost/test
           background: true
